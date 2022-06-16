@@ -8,25 +8,25 @@ export class Store {
     constructor(id , initial = {}) {
         if (!id) throw new Error('store id required')
         this.id = id
-        this.state = initial
+        this.value = initial
     }
 
-    set(path, value) {
-        Obj.set(this.state, path, value)
+    set(path, values) {
+        this.value = Obj.set(this.value || {}, path, values)
         return this
     }
 
     get(path, defaultValue) {
-        return (this.state && path)
-            ? Obj.get(this.state, path, defaultValue)
-            : this.state
+        return (this.value && path)
+            ? Obj.get(this.value, path, defaultValue)
+            : this.value
     }
 
     trim(path) {
         if (path) {
-            Obj.trim(this.state, path)
+            Obj.trim(this.value, path)
         } else {
-            this.state = {}
+            this.value = {}
         }
         return this
     }
@@ -34,18 +34,18 @@ export class Store {
     // session storage
     //
     save() {
-        globalThis.sessionStorage.setItem(this.id, JSON.stringify(this.state))
+        globalThis.sessionStorage.setItem(this.id, JSON.stringify(this.value))
         return this
     }
 
     load() {
         let s = window.sessionStorage.getItem(this.id)
-        this.state = Obj.parse(s)
+        this.value = Obj.parse(s) || {}
         return this
     }
 
     reset() {
-        this.state = {}
+        this.value = {}
         globalThis.sessionStorage.removeItem(this.id)
         return this
     }
