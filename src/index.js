@@ -13,6 +13,7 @@ export class Store {
 
     set(path, values) {
         this.value = Obj.set(this.value || {}, path, values)
+        this.save()
         return this
     }
 
