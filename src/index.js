@@ -32,22 +32,22 @@ export class Store {
         return this
     }
 
-    // session storage
+    // local storage
     //
     save() {
-        globalThis.sessionStorage.setItem(this.id, JSON.stringify(this.value))
+        globalThis.localStorage.setItem(this.id, JSON.stringify(this.value))
         return this
     }
 
     load() {
-        let s = window.sessionStorage.getItem(this.id)
+        let s = window.localStorage.getItem(this.id)
         this.value = Obj.parse(s) || {}
         return this
     }
 
     reset() {
         this.value = {}
-        globalThis.sessionStorage.removeItem(this.id)
+        globalThis.localStorage.removeItem(this.id)
         return this
     }
 }

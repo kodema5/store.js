@@ -28,19 +28,15 @@ describe('store', () => {
     it('can session-storage', () => {
         let s = new Store('store.js')
         s.set('foo', {a: 123})
-        var a = globalThis.sessionStorage.getItem('store.js')
-        assertEquals(a, null)
-
-        s.save()
-        a = globalThis.sessionStorage.getItem('store.js')
-        assert(a)
+        var a = globalThis.localStorage.getItem('store.js')
+        assert(a, {foo:{a:123}})
 
         s.trim() // clear all local
         s.load() // laods from session-storage
         assertEquals(s.get(), {foo:{a:123}})
 
         s.reset() // remove from local-storage too
-        a = globalThis.sessionStorage.getItem('store.js')
+        a = globalThis.localStorage.getItem('store.js')
         assertEquals(a, null)
 
     })
