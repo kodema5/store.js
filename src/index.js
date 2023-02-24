@@ -3,12 +3,21 @@ import * as Obj from './obj.js'
 export { Obj }
 
 export * as Is from './is.js'
+export * as Arr from './arr.js'
+export * as Fn from './fn.js'
 
 export class Store {
-    constructor(id , initial = {}) {
+    constructor(
+        id,
+        {
+            initial = {},
+            store = globalThis.sessionStorage,
+        } = {}
+    ) {
         if (!id) throw new Error('store id required')
         this.id = id
         this.value = initial
+        this.store = store
     }
 
     set(path, values) {
@@ -35,19 +44,19 @@ export class Store {
     // local storage
     //
     save() {
-        globalThis.localStorage.setItem(this.id, JSON.stringify(this.value))
+        this.store.setItem(this.id, JSON.stringify(this.value))
         return this
     }
 
     load() {
-        let s = window.localStorage.getItem(this.id)
+        let s = this.store.getItem(this.id)
         this.value = Obj.parse(s) || {}
         return this
     }
 
     reset() {
         this.value = {}
-        globalThis.localStorage.removeItem(this.id)
+        this.store.removeItem(this.id)
         return this
     }
 }

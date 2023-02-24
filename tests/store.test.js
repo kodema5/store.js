@@ -1,13 +1,9 @@
-// deno test --unstable --watch
-//
 import {
     assert,
     assertEquals,
-} from "https://deno.land/std@0.136.0/testing/asserts.ts";
-import {
-    describe, it, beforeEach
-} from "https://deno.land/std@0.136.0/testing/bdd.ts";
-
+    describe,
+    it,
+} from './deps.js'
 import { Store } from '../mod.js'
 
 describe('store', () => {
@@ -26,7 +22,7 @@ describe('store', () => {
 
 
     it('can session-storage', () => {
-        let s = new Store('store.js')
+        let s = new Store('store.js', { store: globalThis.localStorage })
         s.set('foo', {a: 123})
         var a = globalThis.localStorage.getItem('store.js')
         assert(a, {foo:{a:123}})
