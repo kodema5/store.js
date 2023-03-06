@@ -1,4 +1,5 @@
-import { isEmpty } from "./is.js"
+import { isEmpty, isObject, } from "./is.js"
+import * as Arr from "./arr.js"
 
 export let clean = (obj) => {
     let v = {}
@@ -55,4 +56,32 @@ export let parse = (str, defaultValue) => {
     } catch(x) {
         return defaultValue
     }
+}
+
+export let merge = (obj,...bs) => {
+    Array.from(bs).filter(Boolean).forEach((b) => {
+
+        for (let [k,v] of Object.entries(b)) {
+            let a = obj[k]
+
+            // merge object
+            if (isObject(a) && isObject(v)) {
+                obj[k] = {...a, ...v}
+            }
+
+            // merge array
+            else if (Array.isArray(a)) {
+                obj[k] = [
+                    ...a,
+                    ...(Arr.from(v))
+                ]
+            }
+
+            // replacement
+            else {
+                obj[k] = v
+            }
+        }
+    })
+    return obj
 }

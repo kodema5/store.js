@@ -54,5 +54,20 @@ describe('util', () => {
 
         // save parse
         assertEquals(Obj.parse('xxxxxx', 123), 123)
+
+        assertEquals(
+            Obj.merge(
+                {a:{b:1}, d:[1], e:[]},
+                {a:{c:1}}, // object merge
+                {d:2, e:[3]}, // array merge
+                {f:4}, // assign
+            ),
+            {
+                "a": {"b": 1,"c": 1},
+                "d": [1,2],
+                "e": [3],
+                "f": 4
+            }
+        )
     })
 })
