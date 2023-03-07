@@ -4,7 +4,7 @@ import {
     describe,
     it,
 } from './deps.js'
-import { Is, Arr, Obj, Fn, } from '../mod.js'
+import { Is, Arr, Obj, Fn, Str, } from '../mod.js'
 
 
 
@@ -70,4 +70,10 @@ describe('util', () => {
             }
         )
     })
+
+    it('str', () => {
+        assertEquals(Str.toSnake('ToUpperCase'), 'to_upper_case')
+        assertEquals(Str.toCamel('to_upper_case'), 'toUpperCase')
+    })
+
 })

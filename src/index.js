@@ -5,6 +5,7 @@ export { Obj }
 export * as Is from './is.js'
 export * as Arr from './arr.js'
 export * as Fn from './fn.js'
+export * as Str from './str.js'
 
 export class Store {
     constructor(
